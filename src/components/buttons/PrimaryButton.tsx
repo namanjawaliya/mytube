@@ -13,7 +13,7 @@ const PrimaryButton = ({ children, className = "", callback }: Props) => {
 
   return (
     <button
-      className={`${className} p-2 hover:bg-[#272727]`}
+      className={`${className} p-2 hover-bg`}
       onClick={handleClick}
     >
       {children}
