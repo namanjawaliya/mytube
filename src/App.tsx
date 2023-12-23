@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="flex">
+      <div className="flex viewport-height-minus-header">
         <Sidebar />
         <Body />
       </div>

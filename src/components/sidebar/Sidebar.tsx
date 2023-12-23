@@ -4,11 +4,11 @@ import { SIDEBAR_MENU_ITEMS } from "@/utils/constants";
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
 
-  const sidebarWidth = isSidebarOpen ? "w-56" : "w-20";
+  const sidebarWidth = isSidebarOpen ? "w-60" : "w-20";
 
   return (
     <div
-      className={`ease-linear ${sidebarWidth} transition-all duration-75`}
+      className={`ease-linear ${sidebarWidth} transition-all duration-150 overflow-auto`}
     >
       {SIDEBAR_MENU_ITEMS.map((menuItem, idx) => (
         <ul key={menuItem.title}>
@@ -19,17 +19,13 @@ const Sidebar = () => {
           {menuItem.items.map((subItem) => (
             <li
               key={subItem.name}
-              className={`mx-2 px-2 py-2 hover-bg cursor-pointer rounded-xl text-sm`}
+              className={`px-4 py-2 m-2 hover-bg cursor-pointer rounded-xl text-sm`}
             >
-              <span
-                className={`flex items-center justify-center ${
-                  isSidebarOpen && "justify-stretch"
-                }`}
-              >
-                {subItem.icon && <subItem.icon />}
-                {isSidebarOpen && (
-                  <span className={`truncate pl-6`}>{subItem.name}</span>
+              <span className={`flex items-center gap-6`}>
+                {subItem.icon && (
+                  <subItem.icon size={26} className="overflow-visible" />
                 )}
+                <span className={`truncate overflow-clip`}>{subItem.name}</span>
               </span>
             </li>
           ))}

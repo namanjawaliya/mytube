@@ -5,56 +5,9 @@ import { YT_API_URI } from "@/utils/constants";
 
 import { Search } from "lucide-react";
 import { useQuery } from "react-query";
-enum LiveBroadcastContent {
-  None = "none",
-}
 
-interface Thumbnail {
-  url: string;
-  width: number;
-  height: number;
-}
-
-interface Snippet {
-  publishedAt: string;
-  channelId: string;
-  title: string;
-  description: string;
-  thumbnails: {
-    default: Thumbnail;
-    medium: Thumbnail;
-    high: Thumbnail;
-  };
-  channelTitle: string;
-  liveBroadcastContent: LiveBroadcastContent;
-  publishTime: string;
-}
-
-interface VideoId {
-  kind: string;
-  videoId: string;
-}
-
-interface Item {
-  kind: string;
-  etag: string;
-  id: VideoId;
-  snippet: Snippet;
-}
-
-interface PageInfo {
-  totalResults: number;
-  resultsPerPage: number;
-}
-
-interface YoutubeSearchListResponse {
-  kind: string;
-  etag: string;
-  nextPageToken?: string;
-  regionCode: string;
-  pageInfo: PageInfo;
-  items?: Item[];
-}
+import { Item } from "@/interfaces/Item";
+import { YoutubeSearchListResponse } from "@/interfaces/YoutubeSearchListResponse";
 
 const fetchSearchSuggestions = async (searchQuery: string) => {
   const endpoint = `${YT_API_URI}/search?part=snippet&maxResults=5&q=${searchQuery}&key=${
@@ -97,7 +50,9 @@ const SearchBar = () => {
           <Search size={20} />
         </button>
       </div>
-      {!error && suggestions && <SearchSuggestion suggestions={suggestions} />}
+      {!error && suggestions.length > 0 && (
+        <SearchSuggestion suggestions={suggestions} />
+      )}
     </div>
   );
 };

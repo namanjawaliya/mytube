@@ -10,3 +10,9 @@ body {
 .hover-bg {
   @apply hover:bg-[#272727];
 }
+
+@layer utilities {
+  .viewport-height-minus-header {
+    height: calc(100vh - 64px);
+  }
+}
