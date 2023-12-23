@@ -1,4 +1,8 @@
+import { HomeIcon } from "lucide-react";
+
 export const BRAND_NAME = "My Tube";
+
+export const YT_API_URI = "https://youtube.googleapis.com/youtube/v3";
 
 export const SIDEBAR_MENU_ITEMS = [
   {
@@ -7,22 +11,22 @@ export const SIDEBAR_MENU_ITEMS = [
       {
         name: "Home",
         link: "",
-        icon: ""
+        icon: HomeIcon,
       },
       {
         name: "Shorts",
         link: "",
-        icon: ""
+        icon: HomeIcon,
       },
       {
         name: "Subscriptions",
         link: "",
-        icon: ""
+        icon: HomeIcon,
       },
       {
         name: "YouTube Music",
         link: "",
-        icon: ""
+        icon: HomeIcon,
       },
     ],
   },
@@ -32,22 +36,27 @@ export const SIDEBAR_MENU_ITEMS = [
       {
         name: "Trending",
         link: "",
+        icon: HomeIcon,
       },
       {
         name: "Trending",
         link: "",
+        icon: HomeIcon,
       },
       {
         name: "Trending",
         link: "",
+        icon: HomeIcon,
       },
       {
         name: "Trending",
         link: "",
+        icon: HomeIcon,
       },
       {
         name: "Trending",
         link: "",
+        icon: HomeIcon,
       },
     ],
   },

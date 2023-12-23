@@ -4,6 +4,7 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { BRAND_NAME } from "@/utils/constants";
 import { useAppDispatch } from "@/store/store";
 import { setSidebarState } from "@/store/reducers/globalSlice";
+import SearchBar from "../search-bar/SearchBar";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const Header = () => {
         </PrimaryButton>
         <h1 className=" font-bold uppercase">{BRAND_NAME}</h1>
       </div>
-      <div>Search</div>
+      <SearchBar />
       <div>Action</div>
     </header>
   );

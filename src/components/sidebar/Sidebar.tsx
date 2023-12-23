@@ -1,6 +1,5 @@
 import { useAppSelector } from "@/store/store";
 import { SIDEBAR_MENU_ITEMS } from "@/utils/constants";
-import { HomeIcon } from "lucide-react";
 
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
@@ -12,7 +11,7 @@ const Sidebar = () => {
       {SIDEBAR_MENU_ITEMS.map((menuItem, idx) => (
         <ul key={menuItem.title}>
           {idx > 0 && <hr />}
-          <p>{menuItem.title}</p>
+          <p className="font-bold ml-2">{menuItem.title}</p>
           {menuItem.items.map((subItem) => (
             <li
               key={subItem.name}
@@ -23,7 +22,7 @@ const Sidebar = () => {
                   isSidebarOpen && "justify-stretch"
                 }`}
               >
-                <HomeIcon size={26} />
+                {subItem.icon && <subItem.icon />}
                 <span className={`${!isSidebarOpen ? "hidden" : "block pl-6"}`}>
                   {subItem.name}
                 </span>
