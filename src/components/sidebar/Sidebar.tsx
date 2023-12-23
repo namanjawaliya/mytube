@@ -7,11 +7,15 @@ const Sidebar = () => {
   const sidebarWidth = isSidebarOpen ? "w-56" : "w-20";
 
   return (
-    <div className={`ease-linear ${sidebarWidth} h-full`}>
+    <div
+      className={`ease-linear ${sidebarWidth} transition-all duration-75`}
+    >
       {SIDEBAR_MENU_ITEMS.map((menuItem, idx) => (
         <ul key={menuItem.title}>
-          {idx > 0 && <hr />}
-          <p className="font-bold ml-2">{menuItem.title}</p>
+          {idx > 0 && <hr className="my-2" />}
+          {isSidebarOpen && (
+            <p className="font-bold ml-2">{menuItem.title}</p>
+          )}{" "}
           {menuItem.items.map((subItem) => (
             <li
               key={subItem.name}
@@ -23,9 +27,9 @@ const Sidebar = () => {
                 }`}
               >
                 {subItem.icon && <subItem.icon />}
-                <span className={`${!isSidebarOpen ? "hidden" : "block pl-6"}`}>
-                  {subItem.name}
-                </span>
+                {isSidebarOpen && (
+                  <span className={`truncate pl-6`}>{subItem.name}</span>
+                )}
               </span>
             </li>
           ))}

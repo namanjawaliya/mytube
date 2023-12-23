@@ -1,7 +1,7 @@
 import { SearchIcon } from "lucide-react";
 
 type Props = {
-  suggestions: [];
+  suggestions: string[];
 };
 
 const SearchSuggestion = ({ suggestions }: Props) => {
