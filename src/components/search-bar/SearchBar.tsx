@@ -9,11 +9,12 @@ import { useQuery } from "react-query";
 import { Item } from "@/interfaces/Item";
 import { YoutubeSearchListResponse } from "@/interfaces/YoutubeSearchListResponse";
 
+import { useDebounce } from "@/custom-hooks/useDebounce";
+
 const fetchSearchSuggestions = async (searchQuery: string) => {
   const endpoint = `${YT_API_URI}/search?part=snippet&maxResults=5&q=${searchQuery}&key=${
     import.meta.env.VITE_YT_API_KEY
   }`;
-
   const response = await fetch(endpoint);
   return await response.json();
 };
@@ -34,6 +35,8 @@ const SearchBar = () => {
     setSearchQuery(value);
   };
 
+  const debouncedSearch = useDebounce(handleSearchInput, 500);
+
   const suggestions: string[] =
     data?.items?.map((item: Item) => item?.snippet?.title ?? "") || [];
 
@@ -44,7 +47,7 @@ const SearchBar = () => {
           type="search"
           className=" h-10 w-full rounded-l-full pl-6 border border-[#303030] bg-[#121212] focus:border-blue-400 focus:outline-0"
           placeholder="Search"
-          onChange={handleSearchInput}
+          onChange={debouncedSearch}
         />
         <button className="bg-[#222222] border border-[#303030] h-10 w-16 flex justify-center items-center rounded-r-full">
           <Search size={20} />
