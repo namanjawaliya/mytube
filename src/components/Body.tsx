@@ -48,40 +48,26 @@ const Body = () => {
   if (status === "loading") {
     return <BodyShimmer />;
   }
-  
+
   const videos = data?.pages.flatMap((page) => page.items) || [];
 
   return (
     <div className="w-full overflow-scroll">
       <div className="flex flex-wrap justify-around gap-y-6">
-        {videos.map(({ snippet, statistics }, idx) => {
-          return videos.length === idx + 1 ? (
-            <VideoCard
-              key={snippet.title}
-              thumbnail={
-                snippet.thumbnails?.maxres?.url || snippet.thumbnails?.high?.url
-              }
-              channelTitle={snippet.channelTitle}
-              videoTitle={snippet.title}
-              viewCount={statistics?.viewCount}
-              publishedAt={snippet.publishedAt}
-              channelId={snippet.channelId}
-              innerRef={ref}
-            />
-          ) : (
-            <VideoCard
-              key={snippet.title}
-              thumbnail={
-                snippet.thumbnails?.maxres?.url || snippet.thumbnails?.high?.url
-              }
-              channelTitle={snippet.channelTitle}
-              videoTitle={snippet.title}
-              viewCount={statistics?.viewCount}
-              publishedAt={snippet.publishedAt}
-              channelId={snippet.channelId}
-            />
-          );
-        })}
+        {videos.map(({ snippet, statistics }, idx) => (
+          <VideoCard
+            key={snippet.title}
+            thumbnail={
+              snippet.thumbnails?.medium?.url || snippet.thumbnails?.high?.url
+            }
+            channelTitle={snippet.channelTitle}
+            videoTitle={snippet.title}
+            viewCount={statistics?.viewCount}
+            publishedAt={snippet.publishedAt}
+            channelId={snippet.channelId}
+            innerRef={idx === videos.length - 1 ? ref : undefined}
+          />
+        ))}
       </div>
     </div>
   );
