@@ -6,6 +6,7 @@ import { YT_API_URI } from "@/utils/constants";
 import { formatViewsCount, getFormattedTime } from "@/utils/helper";
 
 import { DotIcon } from "lucide-react";
+import React from "react";
 
 type Props = {
   thumbnail: string;
@@ -14,6 +15,7 @@ type Props = {
   viewCount: string;
   publishedAt: string;
   channelId: string;
+  innerRef?: React.Ref<HTMLDivElement>;
 };
 
 const fetchChannelDetails = async (channelId: string) => {
@@ -31,6 +33,7 @@ const VideoCard = ({
   viewCount,
   publishedAt,
   channelId,
+  innerRef,
 }: Props) => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
 
@@ -47,6 +50,7 @@ const VideoCard = ({
       className={`flex flex-col transition-all duration-300 ease-in-out ${
         isSidebarOpen ? "w-[400px]" : "w-[320px]"
       } gap-3 cursor-pointer`}
+      ref={innerRef}
     >
       <div>
         <img src={thumbnail} className="aspect-video rounded-lg" />
