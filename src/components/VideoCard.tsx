@@ -6,7 +6,8 @@ import { YT_API_URI } from "@/utils/constants";
 import { formatViewsCount, getFormattedTime } from "@/utils/helper";
 
 import { DotIcon } from "lucide-react";
-import React from "react";
+
+import VideoCardShimmer from "@/components/shimmer/VideoCardShimmer";
 
 type Props = {
   thumbnail: string;
@@ -37,11 +38,19 @@ const VideoCard = ({
 }: Props) => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
 
-  const { data } = useQuery(["channelDetails", channelId], () =>
-    fetchChannelDetails(channelId)
+  const { data, status } = useQuery(
+    ["channelDetails", channelId],
+    () => fetchChannelDetails(channelId),
+    {
+      onError: (err) => {
+        console.error("Error fetching channel details:", err);
+      },
+    }
   );
 
-  if (!data) return;
+  if (status === "loading") {
+    return <VideoCardShimmer />;
+  }
 
   const { url: channelThumbnail } = data.items[0].snippet.thumbnails.high;
 
@@ -53,10 +62,18 @@ const VideoCard = ({
       ref={innerRef}
     >
       <div>
-        <img src={thumbnail} className="aspect-video rounded-lg" />
+        <img
+          src={thumbnail}
+          className="aspect-video rounded-lg h-full w-full"
+          alt="Video Thumbnail"
+        />
       </div>
       <div className="flex gap-x-4 items-start mt-2">
-        <img src={channelThumbnail} className="rounded-full w-16 mt-1" />
+        <img
+          src={channelThumbnail}
+          className="rounded-full w-16 mt-1"
+          alt="Channel Thumbnail"
+        />
         <div className="flex flex-col gap-y-1 mt-1">
           <p
             className="overflow-hidden text-[1.6rem]"

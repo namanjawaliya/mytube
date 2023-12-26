@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   background: #0f0f0f;
   color: white;
@@ -13,6 +12,10 @@ body {
 
 .hover-bg {
   @apply hover:bg-[#272727];
+}
+
+.shimmer {
+  @apply bg-slate-600 rounded-lg animate-pulse;
 }
 
 @layer utilities {
