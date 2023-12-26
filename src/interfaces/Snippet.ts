@@ -10,6 +10,7 @@ export interface Snippet {
     default: Thumbnail;
     medium: Thumbnail;
     high: Thumbnail;
+    maxres: Thumbnail
   };
   channelTitle: string;
   liveBroadcastContent: LiveBroadcastContent;
