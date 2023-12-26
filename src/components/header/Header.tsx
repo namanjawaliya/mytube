@@ -17,7 +17,7 @@ const Header = () => {
         <PrimaryButton className="rounded-full" callback={toggleSidebar}>
           <MenuIcon size={24} />
         </PrimaryButton>
-        <h1 className=" font-bold uppercase">{BRAND_NAME}</h1>
+        <h1 className="font-bold uppercase text-3xl">{BRAND_NAME}</h1>
       </div>
       <SearchBar />
       <div>Action</div>

@@ -1,10 +1,10 @@
 import { useAppSelector } from "@/store/store";
-import { SIDEBAR_MENU_ITEMS } from "@/utils/constants";
+import { SIDEBAR_MENU_ITEMS } from "@/utils/sidebar";
 
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
 
-  const sidebarWidth = isSidebarOpen ? "w-60" : "w-20";
+  const sidebarWidth = isSidebarOpen ? "w-96" : "w-24";
 
   return (
     <div
@@ -13,9 +13,7 @@ const Sidebar = () => {
       {SIDEBAR_MENU_ITEMS.map((menuItem, idx) => (
         <ul key={menuItem.title}>
           {idx > 0 && <hr className="my-2" />}
-          {isSidebarOpen && (
-            <p className="font-bold ml-2">{menuItem.title}</p>
-          )}{" "}
+          {isSidebarOpen && <p className="font-bold ml-2">{menuItem.title}</p>}
           {menuItem.items.map((subItem) => (
             <li
               key={subItem.name}
@@ -25,7 +23,9 @@ const Sidebar = () => {
                 {subItem.icon && (
                   <subItem.icon size={26} className="overflow-visible" />
                 )}
-                <span className={`truncate overflow-clip`}>{subItem.name}</span>
+                <span className={`truncate overflow-clip text-xl`}>
+                  {subItem.name}
+                </span>
               </span>
             </li>
           ))}

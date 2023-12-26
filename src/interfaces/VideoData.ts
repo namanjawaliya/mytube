@@ -6,4 +6,5 @@ export interface VideoData {
     snippet: Snippet;
     statistics: Statistics;
   }[];
+  nextPageToken: "string";
 }

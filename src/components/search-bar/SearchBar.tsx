@@ -42,14 +42,14 @@ const SearchBar = () => {
 
   return (
     <div className="relative">
-      <div className="flex items-center w-[40rem]">
+      <div className="flex items-center w-[60rem] h-16">
         <input
           type="search"
-          className=" h-10 w-full rounded-l-full pl-6 border border-[#303030] bg-[#121212] focus:border-blue-400 focus:outline-0"
+          className="w-full h-full rounded-l-full pl-6 text-2xl border border-[#303030] bg-[#121212] focus:border-blue-400 focus:outline-0"
           placeholder="Search"
           onChange={debouncedSearch}
         />
-        <button className="bg-[#222222] border border-[#303030] h-10 w-16 flex justify-center items-center rounded-r-full">
+        <button className="bg-[#222222] border border-[#303030] h-full w-28 flex justify-center items-center rounded-r-full">
           <Search size={20} />
         </button>
       </div>

@@ -1,66 +1,74 @@
 import { YT_API_URI } from "@/utils/constants";
-import { useQuery } from "react-query";
-import VideoCard from "./VideoCard";
+import { useInfiniteQuery } from "react-query";
+import InfiniteScroll from "react-infinite-scroll-component";
+import VideoCard from "@/components/VideoCard";
 
 import { VideoData } from "@/interfaces/VideoData";
 
-const fetchPopularVideos = async (): Promise<VideoData> => {
+const fetchPopularVideos = async (pageToken = ""): Promise<VideoData> => {
   const endpoint = `${YT_API_URI}/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=25&regionCode=IN&key=${
     import.meta.env.VITE_YT_API_KEY
-  }`;
+  }&pageToken=${pageToken}`;
+
   const response = await fetch(endpoint);
+
   if (!response.ok) {
-    throw new Error("Failed to fetch popular videos");
+    const errorMessage = `Failed to fetch popular videos. Status: ${response.status} - ${response.statusText}`;
+    throw new Error(errorMessage);
   }
-  return await response.json();
+
+  return response.json();
 };
 
 const Body = () => {
-  const { data, error, isLoading } = useQuery<VideoData>(
-    ["popularVideos"],
-    () => fetchPopularVideos()
-  );
+  const { data, fetchNextPage, hasNextPage, status } =
+    useInfiniteQuery<VideoData>(
+      ["popularVideos"],
+      ({ pageParam = "" }) => fetchPopularVideos(pageParam),
+      {
+        getNextPageParam: (lastPage) => lastPage.nextPageToken || undefined,
+      }
+    );
 
-  if (isLoading) {
+  const videos = data?.pages.flatMap((page) => page.items) || [];
+
+  if (status === "loading" && !videos.length) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {`${error}`}</div>;
-  }
-
-  if (!data) return;
-
-  console.log({ data });
-  const videos = data?.items || [];
-
   return (
     <div className="w-full overflow-scroll">
-      <div className="flex flex-wrap gap-6">
-        {videos.map(({ snippet, statistics }) => {
-          const {
-            thumbnails,
-            channelTitle,
-            title: videoTitle,
-            publishedAt,
-            channelId,
-          } = snippet;
-
-          const { viewCount } = statistics;
-
-          return (
+      <InfiniteScroll
+        dataLength={videos.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            Loading more...
+          </div>
+        }
+        endMessage={
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            No more videos to load
+          </div>
+        }
+      >
+        <div className="flex flex-wrap justify-around gap-y-6">
+          {videos.map(({ snippet, statistics }) => (
             <VideoCard
-              key={videoTitle}
-              thumbnail={thumbnails?.maxres?.url || thumbnails?.high?.url}
-              channelTitle={channelTitle}
-              videoTitle={videoTitle}
-              viewCount={viewCount}
-              publishedAt={publishedAt}
-              channelId={channelId}
+              key={snippet.title}
+              thumbnail={
+                snippet.thumbnails?.maxres?.url || snippet.thumbnails?.high?.url
+              }
+              channelTitle={snippet.channelTitle}
+              videoTitle={snippet.title}
+              viewCount={statistics?.viewCount}
+              publishedAt={snippet.publishedAt}
+              channelId={snippet.channelId}
             />
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </InfiniteScroll>
     </div>
   );
 };

@@ -1,5 +1,11 @@
-import { YT_API_URI } from "@/utils/constants";
 import { useQuery } from "react-query";
+
+import { useAppSelector } from "@/store/store";
+
+import { YT_API_URI } from "@/utils/constants";
+import { formatViewsCount, getFormattedTime } from "@/utils/helper";
+
+import { DotIcon } from "lucide-react";
 
 type Props = {
   thumbnail: string;
@@ -9,6 +15,7 @@ type Props = {
   publishedAt: string;
   channelId: string;
 };
+
 const fetchChannelDetails = async (channelId: string) => {
   const endpoint = `${YT_API_URI}/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${
     import.meta.env.VITE_YT_API_KEY
@@ -25,7 +32,9 @@ const VideoCard = ({
   publishedAt,
   channelId,
 }: Props) => {
-  const { data } = useQuery(["channelDetails"], () =>
+  const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
+
+  const { data } = useQuery(["channelDetails", channelId], () =>
     fetchChannelDetails(channelId)
   );
 
@@ -34,13 +43,17 @@ const VideoCard = ({
   const { url: channelThumbnail } = data.items[0].snippet.thumbnails.high;
 
   return (
-    <div className="flex flex-col w-96 gap-2 m-2 cursor-pointer">
+    <div
+      className={`flex flex-col transition-all duration-300 ease-in-out ${
+        isSidebarOpen ? "w-[400px]" : "w-[320px]"
+      } gap-3 cursor-pointer`}
+    >
       <div>
         <img src={thumbnail} className="aspect-video rounded-lg" />
       </div>
-      <div className="flex gap-2 items-start">
-        <img src={channelThumbnail} className="rounded-full w-8 h-8 mt-1" />
-        <div>
+      <div className="flex gap-x-4 items-start mt-2">
+        <img src={channelThumbnail} className="rounded-full w-16 mt-1" />
+        <div className="flex flex-col gap-y-1 mt-1">
           <p
             className="overflow-hidden text-[1.6rem]"
             style={{
@@ -51,9 +64,14 @@ const VideoCard = ({
           >
             {videoTitle}
           </p>
-          <p>{channelTitle}</p>
-          <p>{viewCount}</p>
-          <p>{publishedAt}</p>
+          <div className="mt-1">
+            <p className="text-2xl">{channelTitle}</p>
+            <div className="flex text-xl items-center gap-1">
+              <span>{formatViewsCount(viewCount)}</span>
+              <DotIcon />
+              <span>{getFormattedTime(publishedAt)}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
