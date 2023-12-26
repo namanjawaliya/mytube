@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import VideoCard from "@/components/VideoCard";
 
 import { VideoData } from "@/interfaces/VideoData";
+import BodyShimmer from "./shimmer/BodyShimmer";
 
 const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
   const endpoint = `${YT_API_URI}/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=15&regionCode=IN&key=${
@@ -28,24 +29,27 @@ const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
 };
 
 const Body = () => {
-  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery<VideoData>(
-    ["popularVideos"],
-    ({ pageParam = "" }) => fetchPopularVideos(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.nextPageToken || undefined,
-    }
-  );
-
-  const videos = data?.pages.flatMap((page) => page.items) || [];
-
+  const { data, status, hasNextPage, fetchNextPage } =
+    useInfiniteQuery<VideoData>(
+      ["popularVideos"],
+      ({ pageParam = "" }) => fetchPopularVideos(pageParam),
+      {
+        getNextPageParam: (lastPage) => lastPage.nextPageToken || undefined,
+      }
+    );
   const [ref, inView] = useInView();
 
   useEffect(() => {
     if (inView && hasNextPage) {
-      console.log("Fire!!");
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  if (status === "loading") {
+    return <BodyShimmer />;
+  }
+  
+  const videos = data?.pages.flatMap((page) => page.items) || [];
 
   return (
     <div className="w-full overflow-scroll">
