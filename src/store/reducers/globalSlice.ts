@@ -5,7 +5,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  isSidebarOpen: false,
+  isSidebarOpen: true,
 };
 
 const globalSlice = createSlice({

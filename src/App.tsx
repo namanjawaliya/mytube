@@ -4,7 +4,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 
 function App() {
   return (
-    <div>
+    <div className="fixed">
       <Header />
       <div className="flex viewport-height-minus-header">
         <Sidebar />
