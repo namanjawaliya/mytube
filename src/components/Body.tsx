@@ -54,7 +54,7 @@ const Body = () => {
   return (
     <div className="w-full overflow-scroll">
       <div className="flex flex-wrap justify-around gap-y-6">
-        {videos.map(({ snippet, statistics }, idx) => (
+        {videos.map(({ snippet, statistics, contentDetails }, idx) => (
           <VideoCard
             key={snippet.title}
             thumbnail={
@@ -65,6 +65,7 @@ const Body = () => {
             viewCount={statistics?.viewCount}
             publishedAt={snippet.publishedAt}
             channelId={snippet.channelId}
+            duration={contentDetails.duration}
             innerRef={idx === videos.length - 1 ? ref : undefined}
           />
         ))}
