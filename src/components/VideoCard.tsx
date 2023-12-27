@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useQuery } from "react-query";
 
 import { useAppSelector } from "@/store/store";
@@ -21,6 +23,7 @@ type Props = {
   publishedAt: string;
   channelId: string;
   duration: string;
+  embed: string;
   innerRef?: React.Ref<HTMLDivElement>;
 };
 
@@ -40,9 +43,11 @@ const VideoCard = ({
   publishedAt,
   channelId,
   duration,
+  embed,
   innerRef,
 }: Props) => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
+  const [isHover, setIsHover] = useState(false);
 
   const { data, status } = useQuery(
     ["channelDetails", channelId],
@@ -58,28 +63,45 @@ const VideoCard = ({
     return <VideoCardShimmer />;
   }
 
+  const srcMatch = embed.match(/src=["'](.*?)["']/);
+  const src = srcMatch ? srcMatch[1] : "";
+
   const { url: channelThumbnail } = data.items[0].snippet.thumbnails.medium;
 
   return (
     <div
       className={`flex flex-col transition-all duration-300 ease-in-out ${
-        isSidebarOpen ? "w-[40rem]" : "w-[33rem]"
+        isSidebarOpen ? "w-[30rem] lg:w-[40rem]" : "w-[33rem]"
       } gap-3 mx-4 md:mx-0 cursor-pointer`}
       ref={innerRef}
     >
-      <div className="relative">
-        <img
-          src={thumbnail}
-          className="aspect-video rounded-lg h-full w-full"
-          alt="Video Thumbnail"
-        />
-        <span
-          className={`absolute right-0 bottom-1 bg-black bg-opacity-80 px-3 py-1 rounded-lg ${
-            isSidebarOpen ? "text-xl" : "text-lg"
-          }`}
-        >
-          {getFormattedDuration(duration)}
-        </span>
+      <div
+        className="relative"
+        onMouseOver={() => setIsHover(true)}
+        onMouseOut={() => setIsHover(false)}
+      >
+        {!isHover ? (
+          <>
+            <img
+              src={thumbnail}
+              className="aspect-video rounded-lg h-full w-full"
+              alt="Video Thumbnail"
+            />
+            <span
+              className={`absolute right-0 bottom-1 bg-black bg-opacity-80 px-3 py-1 rounded-lg ${
+                isSidebarOpen ? "text-xl" : "text-lg"
+              }`}
+            >
+              {getFormattedDuration(duration)}
+            </span>
+          </>
+        ) : (
+          <iframe
+            src={`https:${src}?autoplay=1&mute=1&controls=0&rel=0&loop=1`}
+            className="rounded-lg w-full h-full aspect-video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        )}
       </div>
       <div className="flex gap-x-4 items-start mt-2">
         <img

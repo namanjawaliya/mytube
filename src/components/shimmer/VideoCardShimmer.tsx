@@ -11,7 +11,7 @@ const VideoCardShimmer = () => {
   return (
     <div
       className={`flex flex-col transition-all duration-300 ease-in-out ${
-        isSidebarOpen ? "w-[40rem]" : "w-[33rem]"
+        isSidebarOpen ? "w-[30rem] lg:w-[40rem]" : "w-[33rem]"
       } gap-3`}
     >
       <div>
