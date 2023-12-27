@@ -12,14 +12,17 @@ const Header = () => {
   const toggleSidebar = () => dispatch(setSidebarState());
 
   return (
-    <header className="flex justify-between items-center py-3 px-3">
+    <header className="flex justify-between items-center py-3 px-3 h-20 md:h-auto">
       <div className="flex items-center gap-2">
-        <PrimaryButton className="rounded-full" callback={toggleSidebar}>
+        <PrimaryButton
+          className="rounded-full hidden md:block"
+          callback={toggleSidebar}
+        >
           <MenuIcon size={24} />
         </PrimaryButton>
         <h1 className="font-bold uppercase text-3xl">{BRAND_NAME}</h1>
       </div>
-      <SearchBar />
+      <SearchBar className="hidden md:block" />
       <div>Action</div>
     </header>
   );
