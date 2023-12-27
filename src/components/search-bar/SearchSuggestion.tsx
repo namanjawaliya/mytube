@@ -6,7 +6,7 @@ type Props = {
 
 const SearchSuggestion = ({ suggestions }: Props) => {
   return (
-    <div className="absolute w-full bg-[#212121] rounded-md mt-2">
+    <div className="absolute w-full bg-[#212121] rounded-md mt-2 z-10">
       <ul className="my-2">
         {suggestions.map((suggestion: string) => (
           <li className="flex items-center hover-bg cursor-pointer px-4 py-4 gap-2">

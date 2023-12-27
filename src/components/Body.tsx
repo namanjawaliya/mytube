@@ -11,7 +11,7 @@ import { VideoData } from "@/interfaces/VideoData";
 import BodyShimmer from "./shimmer/BodyShimmer";
 
 const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
-  const endpoint = `${YT_API_URI}/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=15&regionCode=IN&key=${
+  const endpoint = `${YT_API_URI}/videos?part=snippet%2CcontentDetails%2Cstatistics%2C%20player&maxResults=25&chart=mostPopular&regionCode=IN&key=${
     import.meta.env.VITE_YT_API_KEY
   }&pageToken=${nextPageToken}`;
 
@@ -54,7 +54,7 @@ const Body = () => {
   return (
     <div className="w-full overflow-scroll">
       <div className="flex flex-wrap justify-around gap-y-6">
-        {videos.map(({ snippet, statistics, contentDetails }, idx) => (
+        {videos.map(({ snippet, statistics, contentDetails, player }, idx) => (
           <VideoCard
             key={snippet.title}
             thumbnail={
@@ -66,6 +66,7 @@ const Body = () => {
             publishedAt={snippet.publishedAt}
             channelId={snippet.channelId}
             duration={contentDetails.duration}
+            embed={player.embedHtml}
             innerRef={idx === videos.length - 1 ? ref : undefined}
           />
         ))}
