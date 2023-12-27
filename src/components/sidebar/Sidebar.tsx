@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`ease-linear ${sidebarWidth} transition-all duration-150 overflow-auto`}
+      className={`ease-linear ${sidebarWidth} transition-all duration-150 overflow-auto hidden md:block`}
     >
       {SIDEBAR_MENU_ITEMS.map((menuItem, idx) => (
         <ul key={menuItem.title}>

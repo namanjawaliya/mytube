@@ -19,7 +19,11 @@ const fetchSearchSuggestions = async (searchQuery: string) => {
   return await response.json();
 };
 
-const SearchBar = () => {
+type Props = {
+  className?: string;
+};
+
+const SearchBar = ({ className }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, error } = useQuery<YoutubeSearchListResponse>(
@@ -41,7 +45,7 @@ const SearchBar = () => {
     data?.items?.map((item: Item) => item?.snippet?.title ?? "") || [];
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       <div className="flex items-center w-[60rem] h-16">
         <input
           type="search"
