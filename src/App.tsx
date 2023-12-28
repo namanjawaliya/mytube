@@ -1,14 +1,14 @@
-import Body from "@/components/Body";
 import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/Sidebar";
+import RouterOutlet from "./components/RouterOutlet";
 
 function App() {
   return (
-    <div className="fixed w-full">
+    <div className="fixed w-full h-screen scroll-smooth">
       <Header />
-      <div className="flex viewport-height-minus-header">
+      <div className="flex h-full w-full">
         <Sidebar />
-        <Body />
+        <RouterOutlet />
       </div>
     </div>
   );

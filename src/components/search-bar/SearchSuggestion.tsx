@@ -1,10 +1,11 @@
 import { SearchIcon } from "lucide-react";
+import { FC } from "react";
 
 type Props = {
   suggestions: string[];
 };
 
-const SearchSuggestion = ({ suggestions }: Props) => {
+const SearchSuggestion: FC<Props> = ({ suggestions }) => {
   return (
     <div className="absolute w-full bg-[#212121] rounded-md mt-2 z-10">
       <ul className="my-2">
