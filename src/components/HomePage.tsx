@@ -28,7 +28,7 @@ const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
   return { ...restData, nextPageToken: newPageToken };
 };
 
-const Body = () => {
+const HomePage: React.FC = () => {
   const { data, status, hasNextPage, fetchNextPage } =
     useInfiniteQuery<VideoData>(
       ["popularVideos"],
@@ -67,7 +67,7 @@ const Body = () => {
             channelId={snippet.channelId}
             duration={contentDetails.duration}
             embed={player.embedHtml}
-            innerRef={idx === videos.length - 1 ? ref : undefined}
+            innerRef={idx === videos.length - 10 ? ref : undefined}
           />
         ))}
       </div>
@@ -75,4 +75,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default HomePage;
