@@ -29,7 +29,7 @@ const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
 };
 
 const HomePage: React.FC = () => {
-  const { data, status, hasNextPage, fetchNextPage } =
+  const { data, status, error, hasNextPage, fetchNextPage } =
     useInfiniteQuery<VideoData>(
       ["popularVideos"],
       ({ pageParam = "" }) => fetchPopularVideos(pageParam),
@@ -47,6 +47,14 @@ const HomePage: React.FC = () => {
 
   if (status === "loading") {
     return <BodyShimmer />;
+  }
+
+  if(status === "error") {
+    return <p>
+    {typeof error === 'string'
+      ? error
+      : 'An error occurred. Please try again later.'}
+  </p>
   }
 
   const videos = data?.pages.flatMap((page) => page.items) || [];
