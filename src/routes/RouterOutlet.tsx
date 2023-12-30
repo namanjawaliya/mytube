@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import routes from "./routes";
+import routes from "@/routes/routes";
 
 const RouterOutlet = () => {
   const content = useRoutes(routes);
