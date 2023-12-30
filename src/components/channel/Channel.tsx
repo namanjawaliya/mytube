@@ -6,7 +6,7 @@ import { YT_API_URI } from "@/utils/constants";
 import ChannelBanner from "./ChannelBanner";
 
 type Props = {
-  channelId: string;
+  channelId: string | string;
 };
 
 const fetchChannelDetails = async (channelId: string) => {

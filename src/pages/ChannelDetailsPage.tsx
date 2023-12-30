@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 const ChannelDetailsPage: FC = () => {
   const { channelId } = useParams();
 
-  return <Channel channelId={channelId} />;
+  return <Channel channelId={channelId || ""} />;
 };
 
 export default ChannelDetailsPage;
