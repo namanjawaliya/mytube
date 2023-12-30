@@ -5,13 +5,15 @@ import { useQuery } from "react-query";
 import { useAppSelector } from "@/store/store";
 
 import { YT_API_URI } from "@/utils/constants";
-import {
-  formatViewsCount,
-  getFormattedDuration,
-  getFormattedTime,
-} from "@/utils/helper";
 
-import { DotIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+
+import VideoCardPreview from "@/components/video-card/VideoCardPreview";
+import VideoCardThumbnail from "@/components/video-card/VideoCardThumbnail";
+import VideoCardDuration from "@/components/video-card/VideoCardDuration";
+import VideoCardTitle from "@/components/video-card/VideoCardTitle";
+import VideoCardChannelImage from "@/components/video-card/VideoCardChannelImage";
+import VideoCardMetdataBar from "@/components/video-card/VideoCardMetdataBar";
 
 import VideoCardShimmer from "@/components/shimmer/VideoCardShimmer";
 
@@ -82,50 +84,35 @@ const VideoCard = ({
       >
         {!isHover ? (
           <>
-            <img
-              src={thumbnail}
-              className="aspect-video rounded-lg h-full w-full"
-              alt="Video Thumbnail"
+            <VideoCardThumbnail thumbnail={thumbnail} />
+            <VideoCardDuration
+              isSidebarOpen={isSidebarOpen}
+              duration={duration}
             />
-            <span
-              className={`absolute right-0 bottom-1 bg-black bg-opacity-80 px-3 py-1 rounded-lg ${
-                isSidebarOpen ? "text-xl" : "text-lg"
-              }`}
-            >
-              {getFormattedDuration(duration)}
-            </span>
           </>
         ) : (
-          <iframe
-            src={`https:${src}?autoplay=1&mute=1&controls=0&rel=0&loop=1`}
-            className="rounded-lg w-full h-full aspect-video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
+          <VideoCardPreview src={src} />
         )}
       </div>
       <div className="flex gap-x-4 items-start mt-2">
-        <img
-          className="rounded-full w-16 mt-1"
-          src={channelThumbnail}
-          alt={channelTitle}
-        />
+        <Link to={`/channel/${channelId}`}>
+          <VideoCardChannelImage src={channelThumbnail} alt={channelTitle} />
+        </Link>
+
         <div className="flex flex-col gap-y-1 mt-1">
-          <p
-            className={`line-clamp-2 ${
-              isSidebarOpen ? "text-[1.6rem]" : "text-[1.5rem]"
-            }`}
-          >
-            {videoTitle}
-          </p>
+          <VideoCardTitle
+            isSidebarOpen={isSidebarOpen}
+            videoTitle={videoTitle}
+          />
+
           <div className="mt-1">
-            <p className={` ${isSidebarOpen ? "text-2xl" : "text-xl"}`}>
-              {channelTitle}
-            </p>
-            <div className={`flex items-center gap-1 text-xl`}>
-              <span>{formatViewsCount(viewCount)}</span>
-              <DotIcon />
-              <span>{getFormattedTime(publishedAt)}</span>
-            </div>
+            <VideoCardMetdataBar
+              isSidebarOpen={isSidebarOpen}
+              channelId={channelId}
+              channelTitle={channelTitle}
+              viewCount={viewCount}
+              publishedAt={publishedAt}
+            />
           </div>
         </div>
       </div>
