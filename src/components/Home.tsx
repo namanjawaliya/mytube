@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
 import { YT_API_URI } from "@/utils/constants";
 
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
 
-import VideoCard from "@/components/VideoCard";
+import VideoCard from "@/components/video-card/VideoCard";
 
 import { VideoData } from "@/interfaces/VideoData";
 import BodyShimmer from "./shimmer/BodyShimmer";
@@ -28,8 +28,8 @@ const fetchPopularVideos = async (nextPageToken = ""): Promise<VideoData> => {
   return { ...restData, nextPageToken: newPageToken };
 };
 
-const HomePage: React.FC = () => {
-  const { data, status, hasNextPage, fetchNextPage } =
+const Home: FC = () => {
+  const { data, status, error, hasNextPage, fetchNextPage } =
     useInfiniteQuery<VideoData>(
       ["popularVideos"],
       ({ pageParam = "" }) => fetchPopularVideos(pageParam),
@@ -47,6 +47,16 @@ const HomePage: React.FC = () => {
 
   if (status === "loading") {
     return <BodyShimmer />;
+  }
+
+  if (status === "error") {
+    return (
+      <p>
+        {typeof error === "string"
+          ? error
+          : "An error occurred. Please try again later."}
+      </p>
+    );
   }
 
   const videos = data?.pages.flatMap((page) => page.items) || [];
@@ -75,4 +85,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Home;

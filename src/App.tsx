@@ -1,6 +1,6 @@
 import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/Sidebar";
-import RouterOutlet from "./components/RouterOutlet";
+import RouterOutlet from "./components/routes/RouterOutlet";
 
 function App() {
   return (

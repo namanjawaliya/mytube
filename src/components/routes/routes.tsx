@@ -1,6 +1,6 @@
-// routes.tsx
-import HomePage from "@/components/HomePage";
 import Hello from "@/components/Hello";
+import ChannelDetailsPage from "@/pages/ChannelDetailsPage";
+import HomePage from "@/pages/HomePage";
 
 import { RouteObject } from "react-router-dom";
 
@@ -13,7 +13,11 @@ const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: "body",
+        path: "/channel/:channelId",
+        element: <ChannelDetailsPage />,
+      },
+      {
+        path: "test",
         element: <Hello />,
       },
     ],
