@@ -4,18 +4,21 @@ const formatCount = (count: number, divisor: number, symbol: string) => {
     : count.toString();
 };
 
-export const formatViewsCount = (viewsCount: string) => {
+export const formatTotalCount = (xCount: string) => {
+  const BILLION = 1000000000;
   const MILLION = 1000000;
   const THOUSAND = 1000;
 
-  const count = parseInt(viewsCount);
+  const count = parseInt(xCount);
 
-  if (count >= MILLION) {
-    return `${formatCount(count, MILLION, "M")} views`;
+  if (count >= BILLION) {
+    return `${formatCount(count, BILLION, "B")}`;
+  } else if (count >= MILLION) {
+    return `${formatCount(count, MILLION, "M")}`;
   } else if (count >= THOUSAND) {
-    return `${formatCount(count, THOUSAND, "K")} views`;
+    return `${formatCount(count, THOUSAND, "K")}`;
   } else {
-    return `${viewsCount} views`;
+    return `${xCount}`;
   }
 };
 

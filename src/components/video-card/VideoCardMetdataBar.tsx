@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Link } from "react-router-dom";
 
-import { formatViewsCount, getFormattedTime } from "@/utils/helper";
+import { formatTotalCount, getFormattedTime } from "@/utils/helper";
 
 import { DotIcon } from "lucide-react";
 
@@ -27,7 +27,7 @@ const VideoCardMetdataBar: FC<Props> = ({
         <Link to={`/channel/${channelId}`}>{channelTitle}</Link>
       </p>
       <div className={`flex items-center gap-1 text-xl`}>
-        <span>{formatViewsCount(viewCount)}</span>
+        <span>{formatTotalCount(viewCount)}&nbsp;views</span>
         <DotIcon />
         <span>{getFormattedTime(publishedAt)}</span>
       </div>
