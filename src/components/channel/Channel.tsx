@@ -3,7 +3,9 @@ import { FC } from "react";
 import { useQuery } from "react-query";
 
 import { YT_API_URI } from "@/utils/constants";
-import ChannelBanner from "./ChannelBanner";
+
+import ChannelBanner from "@/components/channel/ChannelBanner";
+import ChannelMetadata from "@/components/channel/ChannelMetadata";
 
 type Props = {
   channelId: string | string;
@@ -21,11 +23,17 @@ const fetchChannelDetails = async (channelId: string) => {
 };
 
 const Channel: FC<Props> = ({ channelId }) => {
-  const { data } = useQuery(["channelDetails", channelId], () =>
+  const { data, status } = useQuery(["channelDetails", channelId], () =>
     fetchChannelDetails(channelId)
   );
 
-  const { brandingSettings } = data.items[0];
+  if (status === "loading") return;
+
+  const { brandingSettings, snippet, statistics } = data.items[0];
+
+  const { videoCount, viewCount, subscriberCount, hiddenSubscriberCount } =
+    statistics;
+  const { title, description, customUrl, publishedAt } = snippet;
 
   return (
     <div className="w-full">
@@ -33,6 +41,17 @@ const Channel: FC<Props> = ({ channelId }) => {
         src={brandingSettings?.image?.bannerExternalUrl}
         alt={brandingSettings?.channel?.title}
       />
+      <ChannelMetadata
+        title={title}
+        description={description}
+        customUrl={customUrl}
+        publishedAt={publishedAt}
+        videoCount={videoCount}
+        viewCount={viewCount}
+        subscriberCount={subscriberCount}
+        hiddenSubscriberCount={hiddenSubscriberCount}
+      />
+      <p className=" text-2xl">{JSON.stringify(statistics)}</p>
     </div>
   );
 };
