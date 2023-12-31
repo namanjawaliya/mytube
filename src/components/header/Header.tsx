@@ -8,14 +8,14 @@ import SearchBar from "@/components/search-bar/SearchBar";
 import { BRAND_NAME } from "@/utils/constants";
 
 import { useAppDispatch } from "@/store/store";
-import { setSidebarState } from "@/store/reducers/globalSlice";
+import { toggleSidebarState } from "@/store/reducers/globalSlice";
 
 import { MenuIcon } from "lucide-react";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
 
-  const toggleSidebar = () => dispatch(setSidebarState());
+  const toggleSidebar = () => dispatch(toggleSidebarState());
 
   return (
     <header className="flex justify-between items-center py-3 px-3 h-20 md:h-auto">
