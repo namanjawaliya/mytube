@@ -66,7 +66,7 @@ const ChannelMetadata: FC<Props> = ({
               <ArrowRight />
             </PrimaryButton>
           </span>
-          <button className="px-6 py-4 bg-white text-black rounded-full text-2xl font-bold">
+          <button className="px-6 py-4 bg-white text-black rounded-full text-2xl">
             Subscribe
           </button>
         </div>

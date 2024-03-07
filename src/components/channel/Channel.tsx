@@ -6,6 +6,11 @@ import { YT_API_URI } from "@/utils/constants";
 
 import ChannelBanner from "@/components/channel/ChannelBanner";
 import ChannelMetadata from "@/components/channel/ChannelMetadata";
+import Tabs from "@/components/tabs/Tabs";
+import TabSections from "../tabs/TabSections";
+import TabContent from "../tabs/TabContent";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "@/store/store";
 
 type Props = {
   channelId: string | string;
@@ -25,6 +30,9 @@ const fetchChannelDetails = async (channelId: string) => {
 const Channel: FC<Props> = ({ channelId }) => {
   const { data, status } = useQuery(["channelDetails", channelId], () =>
     fetchChannelDetails(channelId)
+  );
+  const selectedTab = useAppSelector(
+    (store) => store.globalSlice.currentChannelTab
   );
 
   if (status === "loading") return;
@@ -51,7 +59,11 @@ const Channel: FC<Props> = ({ channelId }) => {
         subscriberCount={subscriberCount}
         hiddenSubscriberCount={hiddenSubscriberCount}
       />
-      <p className=" text-2xl">{JSON.stringify(statistics)}</p>
+      {/* <p className="text-2xl">{JSON.stringify(statistics)}</p> */}
+      <Tabs>
+        <TabSections sections={["Home", "Videos", "Playlists", "Community"]} selected={selectedTab} />
+        <TabContent content={[<h1>nello</h1>, <h2>World</h2>, <h3>bayy</h3>]} selected={selectedTab} />
+      </Tabs>
     </div>
   );
 };

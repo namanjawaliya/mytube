@@ -18,6 +18,10 @@ body {
   .shimmer {
     @apply bg-slate-600 rounded-lg animate-pulse;
   }
+
+  .w-40rem {
+    width: 40rem;
+  }
   
   /* Clears the ‘X’ from Internet Explorer */
   input[type="search"]::-ms-clear,
