@@ -4,7 +4,7 @@ import { SIDEBAR_MENU_ITEMS } from "@/utils/sidebar";
 const Sidebar = () => {
   const { isSidebarOpen } = useAppSelector((store) => store.globalSlice);
 
-  const sidebarWidth = isSidebarOpen ? "w-96" : "w-24";
+  const sidebarWidth = isSidebarOpen ? "w-40rem" : "w-24";
 
   return (
     <div
