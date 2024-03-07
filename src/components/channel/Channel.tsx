@@ -9,7 +9,6 @@ import ChannelMetadata from "@/components/channel/ChannelMetadata";
 import Tabs from "@/components/tabs/Tabs";
 import TabSections from "../tabs/TabSections";
 import TabContent from "../tabs/TabContent";
-import { useSelector } from "react-redux";
 import { useAppSelector } from "@/store/store";
 
 type Props = {
@@ -61,8 +60,14 @@ const Channel: FC<Props> = ({ channelId }) => {
       />
       {/* <p className="text-2xl">{JSON.stringify(statistics)}</p> */}
       <Tabs>
-        <TabSections sections={["Home", "Videos", "Playlists", "Community"]} selected={selectedTab} />
-        <TabContent content={[<h1>nello</h1>, <h2>World</h2>, <h3>bayy</h3>]} selected={selectedTab} />
+        <TabSections
+          sections={["Home", "Videos", "Playlists", "Community"]}
+          selected={selectedTab}
+        />
+        <TabContent
+          content={[<h1>nello</h1>, <h2>World</h2>, <h3>bayy</h3>]}
+          selected={selectedTab}
+        />
       </Tabs>
     </div>
   );
